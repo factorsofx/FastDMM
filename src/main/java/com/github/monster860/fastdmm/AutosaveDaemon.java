@@ -20,7 +20,7 @@ public class AutosaveDaemon implements Runnable
             try
             {
                 Thread.sleep(60000);
-                synchronized(editor)
+                SwingUtilities.invokeLater(() ->
                 {
                     editor.loadedMaps.forEach((dmm) ->
                     {
@@ -30,10 +30,10 @@ public class AutosaveDaemon implements Runnable
                         }
                         catch(FileNotFoundException e)
                         {
-                            JOptionPane.showMessageDialog(editor, "Got FileNotFoundException while saving " + dmm.file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(editor, "Got FileNotFoundException while autosaving " + dmm.file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     });
-                }
+                });
             }
             catch(InterruptedException e)
             {
